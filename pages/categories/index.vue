@@ -30,6 +30,9 @@
 
 <script>
 	export default {
-		layout: 'admin'
+		layout: 'admin',
+		mounted() {
+
+		}
 	}
 </script>

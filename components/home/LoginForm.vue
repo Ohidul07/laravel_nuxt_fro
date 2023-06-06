@@ -90,15 +90,4 @@
 a {
     text-decoration: none;
 }
-.invalid label {
-  color: red;
-}
-
-.invalid input,
-.invalid textarea {
-  border: 1px solid red;
-}
-.err-msg {
-    color: red;
-}
 </style>

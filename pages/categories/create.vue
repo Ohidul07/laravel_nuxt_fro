@@ -14,21 +14,21 @@
 					<div class="border-primary border rounded p-3">
 						<div class="row">
 							<div class="col-md-6">
-								<div class="mb-3">
+								<div class="mb-3" :class="{ invalid: !name.isValid}">
 								  <label for="name" class="form-label">Name</label>
-								  <input type="name" class="form-control" v-model.trim="name.val" id="name" placeholder="Enter Name" required>
-								  <p v-if="!name.isValid">Name must not be empty.</p>
+								  <input type="name" class="form-control" v-model.trim="name.val" @blur="clearValidity('name')" id="name" placeholder="Enter Name">
+								  <p class="err-msg" v-if="!name.isValid">Name must not be empty.</p>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="mb-3">
+								<div class="mb-3" :class="{ invalid: !status.isValid}">
 								  <label for="status" class="form-label">Status</label>
-								  <select class="form-select" v-model="status.val" name="status" aria-label="Default select example" required>
+								  <select class="form-select" v-model="status.val" @blur="clearValidity('status')" name="status" aria-label="Default select example">
 								    <option value="">select</option>
 								    <option value="1">Active</option>
-								    <option value="2">Inactive</option>
+								    <option value="0">Inactive</option>
 								  </select>
-								  <p v-if="!status.isValid">Status must not be empty.</p>
+								  <p class="err-msg" v-if="!status.isValid">Status must not be empty.</p>
 								</div>	
 							</div>
 						</div>
@@ -62,7 +62,7 @@
 			}
 		},
 		methods: {
-			submitCategoryData() {
+			async submitCategoryData() {
 				this.ValidateForm();
 				if(!this.formIsValid) {
 		        	return;
@@ -72,7 +72,7 @@
 		      		name: this.name.val,
 		      		status: this.status.val,
 		      	};
-				this.$store.dispatch('storeCategoryData', categoryData);
+				await this.$store.dispatch('category/storeCategoryData', categoryData);
 			},
 			ValidateForm() {
 				this.formIsValid = true;
@@ -81,9 +81,12 @@
 					this.formIsValid = false;
 				}
 				if(this.status.val == "") {
-					this.name.isValid = false;
+					this.status.isValid = false;
 					this.formIsValid = false;
 				}
+			},
+			clearValidity(input) {
+				this[input].isValid = true;
 			}	
 		}
 	}

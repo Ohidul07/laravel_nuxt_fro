@@ -36,14 +36,24 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    'nuxt-izitoast' 
   ],
-
+  env: process.env,
+  axios: {
+    baseURL: process.env.API_END_POINT
+  },
+  izitoast: {
+    position: 'bottomRight',
+    transitionIn: 'bounceInLeft',
+    transitionOut: 'fadeOutRight',
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }

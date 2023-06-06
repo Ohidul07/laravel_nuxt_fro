@@ -40,6 +40,10 @@ export const actions = {
 			.then(result => {
 				//console.log(result);
 				if(result.status == 1) {
+					this.$notify.success({
+						//title: 'Hooray',
+						message: result.message
+					})
 					console.log(result);
 					context.commit('SET_TOKEN', result.access_token);
 					context.commit('TOKEN_TYPE', result.token_type);
@@ -50,8 +54,11 @@ export const actions = {
 					context.commit('ADD_USER_DATA', result.user);
 					context.commit('LOGIN_ERR_MSG', '')	
 				}
-				else if(result.status == 2) {
-		          context.commit('LOGIN_ERR_MSG', '<div class="err"><i class="fa fa-check-circle"></i> Invalid credential.</div>')
+				else if(result.status == 0) {
+					this.$notify.error({
+						//title: 'Hooray',
+						message: result.message
+					})
 		        }
 			})
 
